@@ -4,8 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissor | Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container" id="startcontainer">
+        <button id="startgamebtn">Start Game</button>
+    </div>
+    
+    <div class="container" id="gamecontainer">
+        <h1 id="gamename">Rock, Paper, Scissors</h1>
+        <p class="message" id="winningcondition">The First to Score 5 Wins!</p>
+        <div class="scores">
+            <div class="score" id="playerscore">Player : 0</div>
+            <div class="score" id="computerscore">Computer : 0</div>
+        </div>
+        <div class="selectionbox">
+            <div class="items" id="playerselection">
+                <div class="item" id="playerrock">
+                    <img src="Images/rock.png" alt="rock" height="100px">
+                    <p class="element">Rock</p>
+                </div>
+                <div class="item" id="playerpaper">
+                    <img src="Images/paper.png" alt="paper" height="100px">
+                    <p class="element">Paper</p>
+                </div>
+                <div class="item" id="playerscissor">
+                    <img src="Images/scissor.png" alt="scissor" height="100px">
+                    <p class="element">Scissor</p>
+                </div>
+            </div>
+            <div class="items" id="computerselection">
+                <div class="item" id="computerrock">
+                    <img src="Images/rock.png" alt="rock" height="100px">
+                    <p class="element">Rock</p>
+                </div>
+                <div class="item" id="computerpaper">
+                    <img src="Images/paper.png" alt="paper" height="100px">
+                    <p class="element">Paper</p>
+                </div>
+                <div class="item" id="computerscissor">
+                    <img src="Images/scissor.png" alt="scissor" height="100px">
+                    <p class="element">Scissor</p>
+                </div>
+            </div>
+        </div>
+        <p class="message" id="rounddeclaration"></p>
+    </div>
+    <div class="container" id="endcontainer">
+        <p class="declaration"></p>
+        <button id="restartgamebtn">Want to Play Again?</button>
+    </div>
     <script src="Script.js"></script>
 </body>
+
 </html>
