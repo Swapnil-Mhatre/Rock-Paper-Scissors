@@ -1,19 +1,18 @@
 const startButton = document.querySelector('#startgamebtn');
 const restartButton = document.querySelector('#restartgamebtn');
 const gameContainer = document.querySelector('#gamecontainer');
+const startPageContainer = document.querySelector('#startcontainer');
+const restartPageContainer = document.querySelector('#endcontainer');
+const gameDeclaration = document.querySelector('#gamedeclaration');
 
 // adding event listner for the start button
 startButton.addEventListener ('click', () => {
-  const startPageContainer = document.querySelector('#startcontainer');
-
   startPageContainer.setAttribute('style', 'display:none;');
   gameContainer.setAttribute('style', 'display: block;');
 })
 
 restartButton.addEventListener ('click', () => {
-  const restartButton = document.querySelector('#endcontainer');
-
-  restartButton.setAttribute('style', 'display:none;');
+  restartPageContainer.setAttribute('style', 'display:none;');
   gameContainer.setAttribute('style', 'display: block;');
 })
 
@@ -25,31 +24,34 @@ function getPlayerChoice () {
   let playerRock = document.querySelector('#playerrock');
   let playerPaper = document.querySelector('#playerpaper');
   let playerScissor = document.querySelector('#playerscissor');
-  let playerChoice = '';
+  let playerSelection = "";
+
   playerRock.addEventListener('click', () => {
-    playerChoice = "Rock";
+    playerSelection = "Rock";
 
     // Setting Style for Selected Element
-    playerRock.setAttribute('style', 'background-color: rgb(15, 200, 200); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
+    playerRock.setAttribute('style', 'background-color: rgb(20, 175, 175); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
     // Removing Style for not Selected Element
     playerPaper.setAttribute('style', 'background-color: aliceblue;');
     playerScissor.setAttribute('style', 'background-color: aliceblue;');
+    playRound(playerSelection);
   });
   playerPaper.addEventListener('click', () => {
-    playerChoice = "Paper";
+    playerSelection = "Paper";
 
-    playerPaper.setAttribute('style', 'background-color: rgb(15, 200, 200); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
+    playerPaper.setAttribute('style', 'background-color: rgb(20, 175, 175); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
     playerRock.setAttribute('style', 'background-color: aliceblue;');
     playerScissor.setAttribute('style', 'background-color: aliceblue;');
+    playRound(playerSelection);
   });
   playerScissor.addEventListener('click', () => {
-    playerChoice = "Scissor";
+    playerSelection = "Scissor";
 
-    playerScissor.setAttribute('style', 'background-color: rgb(15, 200, 200); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
+    playerScissor.setAttribute('style', 'background-color: rgb(20, 175, 175); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
     playerPaper.setAttribute('style', 'background-color: aliceblue;');
     playerRock.setAttribute('style', 'background-color: aliceblue;');
+    playRound(playerSelection);
   });
-  return playerChoice;
 }
 
 function getComputerChoice () {
@@ -79,17 +81,17 @@ function styleElement () {
   let randomchoice = getComputerChoice();
 
   if(randomchoice === "Rock") {
-    computerRock.setAttribute('style', 'background-color: rgb(15, 200, 200); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
+    computerRock.setAttribute('style', 'background-color: rgb(167, 20, 20); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
     computerPaper.setAttribute('style', 'background-color: aliceblue;');
     computerScissor.setAttribute('style', 'background-color: aliceblue;');
   }
   if (randomchoice === "Paper") {
-    computerPaper.setAttribute('style', 'background-color: rgb(15, 200, 200); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
+    computerPaper.setAttribute('style', 'background-color: rgb(167, 20, 20); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
     computerRock.setAttribute('style', 'background-color: aliceblue;');
     computerScissor.setAttribute('style', 'background-color: aliceblue;');
   }
   if (randomchoice === "Scissor") {
-    computerScissor.setAttribute('style', 'background-color: rgb(15, 200, 200); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
+    computerScissor.setAttribute('style', 'background-color: rgb(167, 20, 20); transform: translate(2px, 26px); box-shadow: 3px 3px black;');
     computerPaper.setAttribute('style', 'background-color: aliceblue;');
     computerRock.setAttribute('style', 'background-color: aliceblue;');
   }
@@ -121,7 +123,45 @@ function playRound(playerSelection) {
     computerScore++;
     roundDeclaration.textContent = "You Lose! Rock Crushes Scissor";
   }
+  updateScore(computerScore, playerScore);
+  gameOver();
 }
 
-let playerSelection = getPlayerChoice();
-playRound(playerSelection);
+function updateScore(computerScore, playerScore) {
+  const playerNewScore = document.querySelector('#playerscore');
+  const computerNewScore = document.querySelector('#computerscore');
+  
+  playerNewScore.textContent = `Player : ${playerScore}`;
+  computerNewScore.textContent = `Computer : ${computerScore}`;
+}
+
+function restart () {
+  playerScore = 0;
+  computerScore = 0;
+  updateScore(computerScore, playerScore);
+
+  const elements = document.querySelectorAll('.item');
+  for (element of elements) {
+    element.setAttribute('style', 'background-color: aliceblue;')
+  }
+}
+
+function gameOver () {
+  if (playerScore === 5) {
+    restartPageContainer.setAttribute('style', 'display:flex');
+    gameContainer.setAttribute('style', 'display:none;');
+
+    gameDeclaration.classList.add("declarationmessage");
+    gameDeclaration.textContent = "You Have Won The Game!!!";
+    restart();
+  } 
+  if (computerScore === 5) {
+    restartPageContainer.setAttribute('style', 'display:flex');
+    gameContainer.setAttribute('style', 'display:none;');
+    gameDeclaration.classList.add("declarationmessage");
+    gameDeclaration.textContent = "You Have lost The Game...";
+    restart();
+  }
+}
+
+getPlayerChoice();
